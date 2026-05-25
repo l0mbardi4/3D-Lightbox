@@ -3,122 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Printed LED Lightbox Project</title>
+    <title>3D Printed LED Lightbox</title>
     <style>
         :root {
-            --dark-bg: #0a0a0a;
-            --led-glow: #ffe08a; /* Warm white/yellow */
+            --dark-background: #0a0a0a;
             --text-color: #f0f0f0;
-            --secondary-text-color: #a0a0a0;
+            --accent-color: #ffe082; /* Warm yellow/white LED glow */
+            --navbar-height: 60px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
-            background-color: var(--dark-bg);
+            padding-top: var(--navbar-height);
+            background-color: var(--dark-background);
             color: var(--text-color);
-            line-height: 1.6;
             scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Navigation Bar */
-        nav {
-            position: sticky;
+        .navbar {
+            position: fixed;
             top: 0;
-            background-color: rgba(10, 10, 10, 0.95);
-            padding: 15px 0;
+            width: 100%;
+            background-color: var(--dark-background);
+            border-bottom: 1px solid #333;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        nav .container {
+            height: var(--navbar-height);
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 0 20px;
+            justify-content: center;
         }
 
-        nav a {
-            color: var(--secondary-text-color);
+        .navbar a {
+            color: var(--text-color);
+            padding: 14px 20px;
             text-decoration: none;
-            margin: 0 20px;
-            font-weight: 500;
-            font-size: 1.1em;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            text-align: center;
+            transition: background-color 0.3s ease;
         }
 
-        nav a:hover, nav a.active {
-            color: var(--led-glow);
-            text-shadow: 0 0 8px rgba(255, 224, 138, 0.8);
+        .navbar a:hover {
+            background-color: #333;
         }
 
-        /* Sections */
         section {
-            padding: 80px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        section:last-child {
-            border-bottom: none;
+            padding: 60px 5%;
+            margin-bottom: 20px;
+            min-height: calc(100vh - var(--navbar-height) - 40px); /* Adjust for navbar and margin */
         }
 
         h1, h2, h3 {
-            color: var(--led-glow);
+            color: var(--accent-color);
             text-align: center;
             margin-bottom: 40px;
-            text-shadow: 0 0 10px rgba(255, 224, 138, 0.6);
+            text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
         }
 
-        h2 {
-            font-size: 2.5em;
-            padding-bottom: 10px;
-            position: relative;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--led-glow);
-            box-shadow: 0 0 10px rgba(255, 224, 138, 0.8);
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: var(--secondary-text-color);
-        }
-
-        /* Concept & Inspiration Grid */
-        .image-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .container {
+            display: flex;
+            flex-wrap: wrap;
             gap: 20px;
-            margin-top: 40px;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        .image-grid .column {
+        .column {
+            flex: 1;
+            min-width: 300px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            justify-items: center;
+        }
+
         .image-grid img {
-            width: 150px;
+            width: 100%;
+            max-width: 150px;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 224, 138, 0.3);
+            box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);
             transition: transform 0.3s ease;
         }
 
@@ -126,265 +96,147 @@
             transform: scale(1.05);
         }
 
-        /* Image Placeholder Slots */
-        .image-placeholder-slots {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .image-placeholder-slots img {
-            width: 250px;
-            height: 180px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 224, 138, 0.5);
+        .text-content {
+            background-color: #1a1a1a;
+            padding: 20px;
             border-radius: 8px;
-            object-fit: cover;
-            box-shadow: 0 0 10px rgba(255, 224, 138, 0.2);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            line-height: 1.6;
         }
 
-        /* Table Styles */
-        table {
-            width: 80%;
-            margin: 40px auto;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        .text-content p {
+            margin: 0 0 10px 0;
         }
 
-        table th, table td {
-            padding: 15px;
+        .section-title {
+            font-size: 2.5em;
+        }
+
+        .design-process-list {
+            list-style-type: decimal;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
+            padding: 0;
+            max-width: 700px;
+            color: var(--text-color);
         }
 
-        table th {
-            background-color: rgba(255, 224, 138, 0.1);
-            color: var(--led-glow);
-            font-weight: 600;
-            text-transform: uppercase;
+        .design-process-list li {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            line-height: 1.6;
         }
 
-        table tr:last-child td {
-            border-bottom: none;
-        }
-
-        table tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.08);
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .column {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <a href="#concept">01 Concept & Inspiration</a>
-            <a href="#design-process">02 Design Process in Fusion 360</a>
-            <a href="#stl-files">03 STL Files & Slicer Settings</a>
-            <a href="#led-wiring">04 LED Wiring</a>
-            <a href="#final-result">05 Final Result</a>
-        </div>
+    <nav class="navbar">
+        <a href="#concept">01 Concept & Inspiration</a>
+        <a href="#design">02 Design Process</a>
+        <a href="#stl">03 STL Files & Slicer Settings</a>
+        <a href="#wiring">04 LED Wiring</a>
+        <a href="#final">05 Final Result</a>
+        <a href="#reflection">06 Reflection</a>
     </nav>
 
-    <div class="container">
-        <section id="concept">
-            <h2>01 Concept & Inspiration</h2>
-            <p>Welcome to the journey of creating a custom 3D printed LED lightbox! This project combines my passion for 3D printing with a desire to create unique, illuminated display pieces. The inspiration for these lightboxes stems from various sources, including iconic logos, personal branding, and specific artistic themes. The goal is to transform digital designs into tangible, glowing artifacts that add a personalized touch to any space.</p>
-            <p>From the striking aesthetics of video game antagonists to the vibrant energy of sports teams and music brands, each lightbox aims to capture the essence of its subject through careful design and illumination. The images below represent some of the key inspirations that sparked the idea for this project, showcasing the diverse range of themes that can be brought to life through LED lightboxes.</p>
-            <div class="image-grid">
-                <div class="column">
-                    <img src="images/ANTAGONIST.png" alt="Inspiration Image 1">
-                    <img src="images/Calgary flames Logo.webp" alt="Inspiration Image 2">
-                    <img src="images/Calgary Flames.png" alt="Inspiration Image 3">
-                </div>
-                <div class="column">
-                    <img src="images/I AM MUSIC.webp" alt="Inspiration Image 4">
-                    <img src="images/YVL Logo.jpg" alt="Inspiration Image 5">
+    <section id="concept">
+        <h2 class="section-title">01 Concept & Inspiration</h2>
+        <div class="text-content" style="margin-bottom: 20px;">
+            <p>I originally was going to do a 3D Lightbox inspired by I AM MUSIC by Playboi Carti, and the name of his most recent tour ANTAGONIST. I was going to write ANTAGONIST using the font from the album cover from I AM MUSIC and for the icon next to the title I was going to put Carti's famous hand sign YVL. I later changed my design to represent my favorite hockey team, the Calgary Flames. I support this team because my uncle lives in Calgary and he also supports this team. I decided to change the design to represent the team because it would be simpler and faster to do. I also believed the design would look cleaner with the logo of the team being seamlessly integrated into the text.</p>
+        </div>
+        <div class="container">
+            <div class="column">
+                <div class="image-grid">
+                    <img src="images/inspiration 1.png" alt="Inspiration 1">
+                    <img src="images/inspiration 5.png" alt="Inspiration 5">
+                    <img src="images/inspiration 4.webp" alt="Inspiration 4">
                 </div>
             </div>
-        </section>
-
-        <section id="design-process">
-            <h2>02 Design Process in Fusion 360</h2>
-            <ol>
-                <li>Text, Font, Icon - First we choose what our text will be, then our font and an icon of our liking.</li>
-                <li>Base Sketch - First, we made a reference rectangle that was 300 mm by 120 mm.</li>
-                <li>Offsets - Outer offsets of about 10 mm and inner offsets of 1.2 mm were added around each character to create the walls.</li>
-                <li>Extrude - The base plate was extruded to 1 mm, and the outer and inner walls were extruded 30 mm and 20 mm.</li>
-                <li>LED Passage - Then I created some holes on each letter for the LEDs to pass, but I forgot to make a hole for the LED to come out.</li>
-                <li>Design Caps - The caps were made with a 1 mm offset and another 0.1 mm inner one, then we extruded 20 mm downward.</li>
-            </ol>
-            <p>The iterations in Fusion 360 are crucial for refining the aesthetics and functionality before moving to the physical printing stage. Below are some illustrative screenshots of the design process, highlighting various stages from initial sketches to finalized models.</p>
-            <div class="image-placeholder-slots">
-                <img src="fuison/screenshot sketch.png" alt="Fusion 360 Sketch Screenshot">
-                <img src="fuison/screenshot base.png" alt="Fusion 360 Base Screenshot">
-                <img src="fuison/screenshot caps.png" alt="Fusion 360 Caps Screenshot">
-                <img src="fuison/screenshot final result.png" alt="Fusion 360 Final Result Screenshot">
+            <div class="column">
+                <div class="image-grid">
+                    <img src="images/inspiration 2.webp" alt="Inspiration 2">
+                    <img src="images/inspiration 3.jpg" alt="Inspiration 3">
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="stl-files">
-            <h2>03 STL Files & Slicer Settings</h2>
+    <section id="design">
+        <h2 class="section-title">02 Design Process in Fusion 360</h2>
+        <div class="image-grid" style="margin-bottom: 40px;">
+            <img src="images/screenshot sketch.png" alt="Fusion 360 Sketch">
+            <img src="images/screenshot base.png" alt="Fusion 360 Base Sketch">
+            <img src="images/screenshot caps.png" alt="Fusion 360 Offsets">
+            <img src="images/screenshot final result.png" alt="Fusion 360 Final Result">
+        </div>
+        <ol class="design-process-list">
+            <li><strong>01 Text, Font, Icon</strong> - First we choose what our text will be, then our font and an icon of our liking.</li>
+            <li><strong>02 Base Sketch</strong> - First, we made a reference rectangle that was 300 mm by 120 mm.</li>
+            <li><strong>03 Offsets</strong> - Outer offsets of about 10 mm and inner offsets of 1.2 mm were added around each character to create the walls.</li>
+            <li><strong>04 Extrude</strong> - The base plate was extruded to 1 mm, and the outer and inner walls were extruded 30 mm and 20 mm.</li>
+            <li><strong>05 LED Passage</strong> - Then I created some holes on each letter for the LEDs to pass, but I forgot to make a hole for the LED to come out.</li>
+            <li><strong>06 Design Caps</strong> - The caps were made with a 1 mm offset and another 0.1 mm inner one, then we extruded 20 mm downward.</li>
+        </ol>
+    </section>
+
+    <section id="stl">
+        <h2 class="section-title">03 STL Files and Slicer Settings</h2>
+        <div class="text-content">
             <p>The parts were exported as STL files and imported into Bambu Studio for slicing and printing. Supports were enabled for detailed areas, matte PLA filament was used for the base, and the caps were printed differently for better light diffusion.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Setting</th>
-                        <th>Value</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Printer</td>
-                        <td>Creality Ender 3 S1 Pro</td>
-                        <td>Reliable FDM printer</td>
-                    </tr>
-                    <tr>
-                        <td>Filament Type</td>
-                        <td>PLA+</td>
-                        <td>Good strength and printability, various colors</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle Temperature</td>
-                        <td>205-215°C</td>
-                        <td>Depends on filament brand</td>
-                    </tr>
-                    <tr>
-                        <td>Bed Temperature</td>
-                        <td>60°C</td>
-                        <td>Ensures good first layer adhesion</td>
-                    </tr>
-                    <tr>
-                        <td>Layer Height</td>
-                        <td>0.16mm - 0.2mm</td>
-                        <td>Balance of detail and print time</td>
-                    </tr>
-                    <tr>
-                        <td>Infill Density</td>
-                        <td>10-20%</td>
-                        <td>Grid or Gyroid pattern</td>
-                    </tr>
-                    <tr>
-                        <td>Wall Line Count</td>
-                        <td>2-4</td>
-                        <td>For structural integrity and light blocking</td>
-                    </tr>
-                    <tr>
-                        <td>Print Speed</td>
-                        <td>50-60 mm/s</td>
-                        <td>Optimal for quality and speed</td>
-                    </tr>
-                    <tr>
-                        <td>Retraction Distance</td>
-                        <td>0.8mm</td>
-                        <td>Minimizes stringing</td>
-                    </tr>
-                    <tr>
-                        <td>Retraction Speed</td>
-                        <td>45 mm/s</td>
-                        <td>Minimizes stringing</td>
-                    </tr>
-                    <tr>
-                        <td>Supports</td>
-                        <td>Tree (if needed)</td>
-                        <td>Easier to remove than standard supports</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        </div>
+    </section>
 
-        <section id="led-wiring">
-            <h2>04 LED Wiring</h2>
-            <p>Bringing the lightbox to life requires careful attention to the LED wiring. The goal is to ensure safe, reliable, and aesthetically pleasing illumination. Most projects utilize addressable WS2812B LED strips, allowing for dynamic lighting effects and color control via a microcontroller.</p>
-            <p>The wiring process typically involves:</p>
-            <ul>
-                <li><strong>Cutting LED Strips:</strong> Sizing the strips to fit the internal channels of the 3D printed housing.</li>
-                <li><strong>Soldering Connections:</strong> Attaching power (5V), ground (GND), and data (DIN) wires to the LED strips.</li>
-                <li><strong>Microcontroller Integration:</strong> Connecting the LED strip's data line to a data pin on a microcontroller (e.g., ESP32 or Arduino Nano) for programming.</li>
-                <li><strong>Power Supply:</strong> Ensuring a sufficient 5V power supply to drive the LEDs, calculating current draw based on the number of LEDs used.</li>
-                <li><strong>Diffusion Layer:</strong> Placing a translucent 3D printed diffuser between the LEDs and the front plate to ensure a uniform glow.</li>
-            </ul>
-            <p>Proper wiring and insulation are critical for both functionality and safety. Below are conceptual diagrams illustrating typical LED strip connections and a general overview of the wiring setup for these lightboxes.</p>
-            <div class="image-placeholder-slots">
-                <img src="https://via.placeholder.com/250x180?text=Wiring+Diagram+1" alt="Wiring Diagram 1">
-                <img src="https://via.placeholder.com/250x180?text=Wiring+Diagram+2" alt="Wiring Diagram 2">
+    <section id="wiring">
+        <h2 class="section-title">04 LED Wiring</h2>
+        <div class="container">
+            <div class="column">
+                <img src="images/placeholder_wiring_1.png" alt="LED Wiring Placeholder 1" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);">
             </div>
-        </section>
+            <div class="column">
+                <img src="images/placeholder_wiring_2.png" alt="LED Wiring Placeholder 2" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);">
+            </div>
+        </div>
+    </section>
 
-        <section id="final-result">
-            <h2>05 Final Result</h2>
-            <p>After all the design, printing, and wiring phases are complete, the final LED lightbox emerges as a testament to the entire process. The combination of precise 3D printing and vibrant LED illumination creates a striking visual piece, showcasing the chosen design with a warm, inviting glow.</p>
-            <p>Each completed lightbox is unique, reflecting the original concept and the technical details meticulously handled throughout the project. From personalized gifts to decorative accents, these lightboxes stand out as functional art. The warm white/yellow glow, in particular, adds a cozy and modern ambiance, making them perfect for desks, shelves, or wall displays.</p>
-            <p>Below are images of the finished lightboxes, demonstrating the successful integration of all components and the beautiful illuminated effect.</p>
-            <div class="image-grid">
-                <div class="column">
-                    <img src="images/ANTAGONIST.png" alt="ANTAGONIST Logo Lightbox">
-                    <img src="images/Calgary flames Logo.webp" alt="Calgary Flames Logo Lightbox">
-                </div>
-                <div class="column">
-                    <img src="images/I AM MUSIC.webp" alt="I AM MUSIC Logo Lightbox">
-                    <img src="images/YVL Logo.jpg" alt="YVL Logo Lightbox">
-                </div>
-            </div>
-        </section>
-    </div>
+    <section id="final">
+        <h2 class="section-title">05 Final Result</h2>
+        <div class="image-grid">
+            <img src="images/placeholder_final_1.png" alt="Final Result Placeholder 1">
+            <img src="images/placeholder_final_2.png" alt="Final Result Placeholder 2">
+            <img src="images/placeholder_final_3.png" alt="Final Result Placeholder 3">
+            <img src="images/placeholder_final_4.png" alt="Final Result Placeholder 4">
+        </div>
+    </section>
+
+    <section id="reflection">
+        <h2 class="section-title">06 Reflection</h2>
+        <div class="text-content">
+            <p>What worked for my design was that the letters fit well even though you had to force them a little bit. I also liked how the base and the first hole from the C to the A ended up. What I would change would be the flames from the C. The flames either ended up too tight, or would not fit at all. The bottom and top flame both fit, but were very tight and you would have to force them. On the other hand, the middle flame did not fit at all, not even if you force it. I would also make the rest of the holes in the base bigger, but I am not sure because I was not able to test if the LEDs fit, but just to make sure I would make them bigger.</p>
+        </div>
+    </section>
 
     <script>
-        document.querySelectorAll('nav a').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
 
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
-
-                // Remove active class from all links
-                document.querySelectorAll('nav a').forEach(link => {
-                    link.classList.remove('active');
-                });
-                // Add active class to the clicked link
-                this.classList.add('active');
             });
-        });
-
-        // Set active class on scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 100 && pageYOffset < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Set the initial active link when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash) {
-                const targetSection = document.querySelector(window.location.hash);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                    document.querySelector(`nav a[href="${window.location.hash}"]`).classList.add('active');
-                }
-            } else {
-                // If no hash, activate the first link
-                document.querySelector('nav a').classList.add('active');
-            }
         });
     </script>
 </body>
