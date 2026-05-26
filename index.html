@@ -213,15 +213,15 @@
         <div class="container">
             <div class="column">
                 <div class="image-grid">
-                    <img src="inspiration 1.png" alt="Inspiration 1">
-                    <img src="inspiration 5.png" alt="Inspiration 5">
-                    <img src="inspiration 4.webp" alt="Inspiration 4">
+                    <img src="images/inspiration 1.png" alt="Inspiration 1" class="lightbox-trigger">
+                    <img src="images/inspiration 5.png" alt="Inspiration 5" class="lightbox-trigger">
+                    <img src="images/inspiration 4.webp" alt="Inspiration 4" class="lightbox-trigger">
                 </div>
             </div>
             <div class="column">
                 <div class="image-grid">
-                    <img src="inspiration 2.webp" alt="Inspiration 2">
-                    <img src="inspiration 3.jpg" alt="Inspiration 3">
+                    <img src="images/inspiration 2.webp" alt="Inspiration 2" class="lightbox-trigger">
+                    <img src="images/inspiration 3.jpg" alt="Inspiration 3" class="lightbox-trigger">
                 </div>
             </div>
         </div>
@@ -230,10 +230,10 @@
     <section id="design">
         <h2 class="section-title">02 Design Process in Fusion 360</h2>
         <div class="image-grid" style="margin-bottom: 40px;">
-            <img src="screenshot sketch.png" alt="Fusion 360 Sketch">
-            <img src="screenshot base.png" alt="Fusion 360 Base Sketch">
-            <img src="screenshot caps.png" alt="Fusion 360 Offsets">
-            <img src="screenshot final result.png" alt="Fusion 360 Final Result">
+            <img src="images/screenshot sketch.png" alt="Fusion 360 Sketch" class="lightbox-trigger">
+            <img src="images/screenshot base.png" alt="Fusion 360 Base Sketch" class="lightbox-trigger">
+            <img src="images/screenshot caps.png" alt="Fusion 360 Offsets" class="lightbox-trigger">
+            <img src="images/screenshot final result.png" alt="Fusion 360 Final Result" class="lightbox-trigger">
         </div>
         <ol class="design-process-list">
             <li><strong>01 Text, Font, Icon</strong> - First we choose what our text will be, then our font and an icon of our liking.</li>
@@ -250,16 +250,19 @@
         <div class="text-content">
             <p>The parts were exported as STL files and imported into Bambu Studio for slicing and printing. Supports were enabled for detailed areas, matte PLA filament was used for the base, and the caps were printed differently for better light diffusion.</p>
         </div>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <img src="images/Printer Image.jpg" alt="3D Printer" style="width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);" class="lightbox-trigger">
+        </div>
     </section>
 
     <section id="wiring">
         <h2 class="section-title">04 LED Wiring</h2>
         <div class="container">
             <div class="column">
-                <img src="placeholder_wiring_1.png" alt="LED Wiring Placeholder 1" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);">
+                <img src="images/placeholder_wiring_1.png" alt="LED Wiring Placeholder 1" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);" class="lightbox-trigger">
             </div>
             <div class="column">
-                <img src="placeholder_wiring_2.png" alt="LED Wiring Placeholder 2" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);">
+                <img src="images/placeholder_wiring_2.png" alt="LED Wiring Placeholder 2" style="width: 100%; max-width: 300px; border-radius: 8px; box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);" class="lightbox-trigger">
             </div>
         </div>
     </section>
@@ -267,10 +270,10 @@
     <section id="final">
         <h2 class="section-title">05 Final Result</h2>
         <div class="image-grid">
-            <img src="placeholder_final_1.png" alt="Final Result Placeholder 1">
-            <img src="placeholder_final_2.png" alt="Final Result Placeholder 2">
-            <img src="placeholder_final_3.png" alt="Final Result Placeholder 3">
-            <img src="placeholder_final_4.png" alt="Final Result Placeholder 4">
+            <img src="images/placeholder_final_1.png" alt="Final Result Placeholder 1" class="lightbox-trigger">
+            <img src="images/placeholder_final_2.png" alt="Final Result Placeholder 2" class="lightbox-trigger">
+            <img src="images/placeholder_final_3.png" alt="Final Result Placeholder 3" class="lightbox-trigger">
+            <img src="images/placeholder_final_4.png" alt="Final Result Placeholder 4" class="lightbox-trigger">
         </div>
     </section>
 
@@ -314,7 +317,7 @@
         const lightboxImage = document.getElementById('lightboxImage');
         const lightboxClose = document.getElementById('lightboxClose');
 
-        document.querySelectorAll('.image-grid img, .column img:not(.image-grid img)').forEach(image => {
+        document.querySelectorAll('.lightbox-trigger').forEach(image => {
             image.addEventListener('click', function() {
                 lightboxImage.src = this.src;
                 lightboxOverlay.classList.add('active');
