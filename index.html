@@ -14,14 +14,148 @@
         }
 
         body {
-            font-family: Arial, sans-serif; /* Reverted to system font */
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding-top: var(--navbar-height);
+            padding-top: 0; /* Initially no padding for homepage */
             background-color: var(--flames-black);
             color: var(--flames-white);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
+        body.content-active {
+            padding-top: var(--navbar-height);
+        }
+
+        /* Homepage specific styles */
+        #homepage {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--flames-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #homepage h1 {
+            font-family: Arial Black, sans-serif;
+            font-size: 5em;
+            color: var(--flames-gold);
+            margin-bottom: 0.1em;
+            text-shadow: 0 0 20px var(--flames-red), 0 0 40px var(--flames-gold);
+            line-height: 1;
+        }
+
+        #homepage h2 {
+            font-family: Arial Black, sans-serif;
+            font-size: 2.5em;
+            color: var(--flames-red);
+            margin-top: 0;
+            text-shadow: 0 0 10px var(--flames-gold), 0 0 20px var(--flames-red);
+            line-height: 1;
+        }
+
+        #hockey-rink {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            background-color: transparent; /* Changed to transparent for a more abstract net */
+            border: 5px solid var(--flames-red);
+            border-radius: 10px;
+            margin: 40px auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--flames-red), 0 0 30px var(--flames-gold);
+        }
+
+        #goal-net {
+            position: absolute;
+            right: 0;
+            top: 15px;
+            width: 80px;
+            height: 120px;
+            border: 3px solid var(--flames-white);
+            border-right: none;
+            box-sizing: border-box;
+            border-radius: 5px 0 0 5px;
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle net background */
+        }
+
+        #puck {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            left: 50px;
+            cursor: pointer;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.8), 0 0 10px rgba(255,255,255,0.3);
+            transition: transform 0.3s ease-out;
+            z-index: 10;
+        }
+
+        #puck.shot {
+            transform: translateX(180px); /* Adjust to move into the net */
+        }
+
+        #goal-animation {
+            position: absolute;
+            font-family: Arial Black, sans-serif;
+            font-size: 6em;
+            font-weight: bold;
+            color: var(--flames-gold);
+            text-shadow: 0 0 20px var(--flames-red);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        #goal-animation.active {
+            animation: goalFlash 0.3s ease-out forwards;
+            animation-iteration-count: 8; /* Flash 8 times */
+        }
+
+        @keyframes goalFlash {
+            0%   { opacity: 0; transform: scale(0.5); color: var(--flames-red); }
+            50%  { opacity: 1; transform: scale(1.1); color: var(--flames-gold); }
+            100% { opacity: 0; transform: scale(1.5); color: var(--flames-red); }
+        }
+
+        #skip-button {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--flames-red);
+            color: var(--flames-white);
+            border: 2px solid var(--flames-gold);
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        #skip-button:hover {
+            background-color: var(--flames-gold);
+            color: var(--flames-black);
+            box-shadow: 0 0 15px var(--flames-red);
+        }
+
+        /* Existing styles adjusted for homepage */
         .navbar {
             position: fixed;
             top: 0;
@@ -34,6 +168,14 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .navbar.active {
+            opacity: 1;
+            pointer-events: all;
         }
 
         .navbar a {
@@ -59,14 +201,14 @@
         }
 
         h1, h2, h3 {
-            font-family: Arial Black, sans-serif; /* Sporty system font */
+            font-family: Arial Black, sans-serif;
             color: var(--flames-gold);
             text-align: center;
             margin-bottom: 50px;
             text-transform: uppercase;
             font-size: 3em;
             letter-spacing: 2px;
-            text-shadow: 0 0 15px var(--flames-gold), 0 0 30px var(--flames-red);
+            text-shadow: 0 0 15px var(--flames-red), 0 0 30px var(--flames-gold);
             border-bottom: 3px solid var(--flames-gold);
             padding-bottom: 15px;
             margin-left: auto;
@@ -89,11 +231,11 @@
             flex-direction: column;
             gap: 20px;
             align-items: center;
-            background-color: #1a1a1a; /* Darker card background */
+            background-color: #1a1a1a;
             border: 2px solid var(--flames-red);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 0 15px rgba(244, 196, 48, 0.6), 0 0 25px rgba(200, 16, 46, 0.4); /* Gold/Red glow */
+            box-shadow: 0 0 15px rgba(244, 196, 48, 0.6), 0 0 25px rgba(200, 16, 46, 0.4);
         }
 
         .image-grid {
@@ -108,7 +250,7 @@
             max-width: 200px;
             height: auto;
             border-radius: 10px;
-            box-shadow: 0 0 10px var(--flames-red), 0 0 20px var(--flames-gold); /* Red glow, gold accent */
+            box-shadow: 0 0 10px var(--flames-red), 0 0 20px var(--flames-gold);
             transition: transform 0.3s ease;
             cursor: pointer;
             border: 2px solid var(--flames-red);
@@ -116,14 +258,14 @@
 
         .image-grid img:hover {
             transform: scale(1.08);
-            box-shadow: 0 0 20px var(--flames-gold), 0 0 30px var(--flames-red); /* Stronger gold/red glow */
+            box-shadow: 0 0 20px var(--flames-gold), 0 0 30px var(--flames-red);
         }
 
         .text-content {
-            background-color: #1a1a1a; /* Darker card background */
+            background-color: #1a1a1a;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 12px rgba(200, 16, 46, 0.5); /* Red glow */
+            box-shadow: 0 0 12px rgba(200, 16, 46, 0.5);
             line-height: 1.8;
             border: 1px solid var(--flames-red);
         }
@@ -138,7 +280,7 @@
         }
 
         .design-process-list {
-            list-style-type: none; /* Remove default bullet points */
+            list-style-type: none;
             text-align: left;
             margin: 0 auto;
             padding: 0;
@@ -147,15 +289,15 @@
         }
 
         .design-process-list li {
-            background-color: #1a1a1a; /* Darker card background */
+            background-color: #1a1a1a;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(200, 16, 46, 0.3); /* Red glow */
+            box-shadow: 0 0 10px rgba(200, 16, 46, 0.3);
             margin-bottom: 15px;
             line-height: 1.7;
             border-left: 5px solid var(--flames-red);
             position: relative;
-            padding-left: 45px; /* Space for custom number */
+            padding-left: 45px;
         }
 
         .design-process-list li strong {
@@ -191,7 +333,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95); /* Darker background for lightbox */
+            background-color: rgba(0, 0, 0, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -242,6 +384,12 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            #homepage h1 {
+                font-size: 3.5em;
+            }
+            #homepage h2 {
+                font-size: 1.8em;
+            }
             .navbar a {
                 padding: 18px 10px;
                 font-size: 0.9em;
@@ -278,6 +426,35 @@
             }
         }
         @media (max-width: 480px) {
+            #homepage h1 {
+                font-size: 2.5em;
+            }
+            #homepage h2 {
+                font-size: 1.3em;
+            }
+            #hockey-rink {
+                width: 250px;
+                height: 120px;
+            }
+            #goal-net {
+                width: 60px;
+                height: 100px;
+                top: 10px;
+            }
+            #puck {
+                width: 30px;
+                height: 30px;
+                left: 30px;
+            }
+            #goal-animation {
+                font-size: 4em;
+            }
+            #skip-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
             .navbar a {
                 font-size: 0.8em;
                 padding: 18px 5px;
@@ -295,6 +472,17 @@
     </style>
 </head>
 <body>
+    <section id="homepage">
+        <h1>3D LED Lightbox</h1>
+        <h2>Calgary Flames Edition</h2>
+        <div id="hockey-rink">
+            <div id="goal-net"></div>
+            <div id="puck"></div>
+        </div>
+        <div id="goal-animation">GOAL!</div>
+        <button id="skip-button">Skip</button>
+    </section>
+
     <nav class="navbar">
         <a href="#concept">01 Concept & Inspiration</a>
         <a href="#design">02 Design Process</a>
@@ -392,35 +580,83 @@
     </div>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function() {
+            const homepage = document.getElementById('homepage');
+            const navbar = document.querySelector('.navbar');
+            const skipButton = document.getElementById('skip-button');
+            const puck = document.getElementById('puck');
+            const goalNet = document.getElementById('goal-net');
+            const goalAnimation = document.getElementById('goal-animation');
+            const firstContentSection = document.getElementById('concept');
 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            function scrollToContent() {
+                homepage.style.display = 'none';
+                navbar.classList.add('active');
+                document.body.classList.add('content-active');
+                firstContentSection.scrollIntoView({
                     behavior: 'smooth'
                 });
-            });
-        });
-
-        const lightboxOverlay = document.getElementById('lightboxOverlay');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxClose = document.getElementById('lightboxClose');
-
-        document.querySelectorAll('.lightbox-trigger').forEach(image => {
-            image.addEventListener('click', function() {
-                lightboxImage.src = this.src;
-                lightboxOverlay.classList.add('active');
-            });
-        });
-
-        lightboxClose.addEventListener('click', function() {
-            lightboxOverlay.classList.remove('active');
-        });
-
-        lightboxOverlay.addEventListener('click', function(e) {
-            if (e.target === this) {
-                lightboxOverlay.classList.remove('active');
             }
+
+            skipButton.addEventListener('click', scrollToContent);
+
+            puck.addEventListener('click', function() {
+                // Prevent multiple shots while animating
+                if (puck.classList.contains('shot')) return;
+
+                puck.classList.add('shot');
+
+                setTimeout(() => {
+                    // Puck is now in the net area
+                    goalAnimation.classList.add('active');
+                    setTimeout(() => {
+                        goalAnimation.classList.remove('active');
+                        puck.classList.remove('shot'); // Reset puck for next time if needed (though we scroll away)
+                        puck.style.transform = 'translateX(0)'; // Reset visual position
+                        scrollToContent();
+                    }, 2000); // Duration of GOAL! animation
+                }, 300); // Duration of puck shot animation
+            });
+
+            // Smooth scroll for navbar links (existing functionality)
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - navbar.offsetHeight;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Lightbox functionality (existing functionality)
+            document.querySelectorAll('.lightbox-trigger').forEach(image => {
+                image.addEventListener('click', function() {
+                    lightboxImage.src = this.src;
+                    lightboxOverlay.classList.add('active');
+                });
+            });
+
+            lightboxClose.addEventListener('click', function() {
+                lightboxOverlay.classList.remove('active');
+            });
+
+            lightboxOverlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    lightboxOverlay.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
