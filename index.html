@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Printed LED Lightbox</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
-
         :root {
             --flames-red: #C8102E;
             --flames-gold: #F4C430;
@@ -16,7 +14,7 @@
         }
 
         body {
-            font-family: 'Roboto Condensed', Arial, sans-serif;
+            font-family: Arial, sans-serif; /* Reverted to system font */
             margin: 0;
             padding-top: var(--navbar-height);
             background-color: var(--flames-black);
@@ -39,7 +37,7 @@
         }
 
         .navbar a {
-            color: var(--flames-white);
+            color: var(--flames-gold);
             padding: 18px 25px;
             text-decoration: none;
             text-align: center;
@@ -51,7 +49,7 @@
 
         .navbar a:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            color: var(--flames-gold);
+            color: var(--flames-white);
         }
 
         section {
@@ -61,15 +59,15 @@
         }
 
         h1, h2, h3 {
-            font-family: 'Roboto Condensed', Arial Black, sans-serif;
+            font-family: Arial Black, sans-serif; /* Sporty system font */
             color: var(--flames-gold);
             text-align: center;
             margin-bottom: 50px;
             text-transform: uppercase;
             font-size: 3em;
             letter-spacing: 2px;
-            text-shadow: 0 0 15px var(--flames-red), 0 0 30px var(--flames-gold);
-            border-bottom: 3px solid var(--flames-red);
+            text-shadow: 0 0 15px var(--flames-gold), 0 0 30px var(--flames-red);
+            border-bottom: 3px solid var(--flames-gold);
             padding-bottom: 15px;
             margin-left: auto;
             margin-right: auto;
@@ -91,11 +89,11 @@
             flex-direction: column;
             gap: 20px;
             align-items: center;
-            background-color: var(--flames-black);
+            background-color: #1a1a1a; /* Darker card background */
             border: 2px solid var(--flames-red);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 0 15px rgba(200, 16, 46, 0.6), 0 0 25px rgba(244, 196, 48, 0.4);
+            box-shadow: 0 0 15px rgba(244, 196, 48, 0.6), 0 0 25px rgba(200, 16, 46, 0.4); /* Gold/Red glow */
         }
 
         .image-grid {
@@ -110,22 +108,22 @@
             max-width: 200px;
             height: auto;
             border-radius: 10px;
-            box-shadow: 0 0 10px var(--flames-gold), 0 0 20px var(--flames-red);
+            box-shadow: 0 0 10px var(--flames-red), 0 0 20px var(--flames-gold); /* Red glow, gold accent */
             transition: transform 0.3s ease;
             cursor: pointer;
-            border: 2px solid var(--flames-gold);
+            border: 2px solid var(--flames-red);
         }
 
         .image-grid img:hover {
             transform: scale(1.08);
-            box-shadow: 0 0 20px var(--flames-gold), 0 0 30px var(--flames-red);
+            box-shadow: 0 0 20px var(--flames-gold), 0 0 30px var(--flames-red); /* Stronger gold/red glow */
         }
 
         .text-content {
-            background-color: #1a1a1a;
+            background-color: #1a1a1a; /* Darker card background */
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 12px rgba(200, 16, 46, 0.5);
+            box-shadow: 0 0 12px rgba(200, 16, 46, 0.5); /* Red glow */
             line-height: 1.8;
             border: 1px solid var(--flames-red);
         }
@@ -149,10 +147,10 @@
         }
 
         .design-process-list li {
-            background-color: var(--flames-black);
+            background-color: #1a1a1a; /* Darker card background */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(244, 196, 48, 0.3);
+            box-shadow: 0 0 10px rgba(200, 16, 46, 0.3); /* Red glow */
             margin-bottom: 15px;
             line-height: 1.7;
             border-left: 5px solid var(--flames-red);
@@ -314,13 +312,13 @@
         <div class="container">
             <div class="column">
                 <div class="image-grid">
-                    <img src="inspiration 1.png" alt="Inspiration 1" class="lightbox-trigger">
-                    <img src="inspiration 5.png" alt="Inspiration 5" class="lightbox-trigger">
                     <img src="inspiration 4.webp" alt="Inspiration 4" class="lightbox-trigger">
+                    <img src="inspiration 5.png" alt="Inspiration 5" class="lightbox-trigger">
                 </div>
             </div>
             <div class="column">
                 <div class="image-grid">
+                    <img src="inspiration 1.png" alt="Inspiration 1" class="lightbox-trigger">
                     <img src="inspiration 2.webp" alt="Inspiration 2" class="lightbox-trigger">
                     <img src="inspiration 3.jpg" alt="Inspiration 3" class="lightbox-trigger">
                 </div>
