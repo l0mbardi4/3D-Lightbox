@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Printed LED Lightbox</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+
         :root {
-            --dark-background: #0a0a0a;
-            --text-color: #f0f0f0;
-            --accent-color: #ffe082; /* Warm yellow/white LED glow */
-            --navbar-height: 60px;
+            --flames-red: #C8102E;
+            --flames-gold: #F4C430;
+            --flames-black: #111111;
+            --flames-white: #FFFFFF;
+            --navbar-height: 70px;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto Condensed', Arial, sans-serif;
             margin: 0;
             padding-top: var(--navbar-height);
-            background-color: var(--dark-background);
-            color: var(--text-color);
+            background-color: var(--flames-black);
+            color: var(--flames-white);
             scroll-behavior: smooth;
         }
 
@@ -25,126 +28,179 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: var(--dark-background);
-            border-bottom: 1px solid #333;
+            background-color: var(--flames-red);
+            border-bottom: 2px solid var(--flames-gold);
             z-index: 1000;
             height: var(--navbar-height);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .navbar a {
-            color: var(--text-color);
-            padding: 14px 20px;
+            color: var(--flames-white);
+            padding: 18px 25px;
             text-decoration: none;
             text-align: center;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-transform: uppercase;
         }
 
         .navbar a:hover {
-            background-color: #333;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--flames-gold);
         }
 
         section {
-            padding: 60px 5%;
-            margin-bottom: 20px;
-            min-height: calc(100vh - var(--navbar-height) - 40px); /* Adjust for navbar and margin */
+            padding: 80px 5%;
+            margin-bottom: 30px;
+            min-height: calc(100vh - var(--navbar-height) - 60px); /* Adjust for navbar and margin */
         }
 
         h1, h2, h3 {
-            color: var(--accent-color);
+            font-family: 'Roboto Condensed', Arial Black, sans-serif;
+            color: var(--flames-gold);
             text-align: center;
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            font-size: 3em;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px var(--flames-red), 0 0 30px var(--flames-gold);
+            border-bottom: 3px solid var(--flames-red);
+            padding-bottom: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 90%;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
             justify-content: center;
             align-items: flex-start;
         }
 
         .column {
             flex: 1;
-            min-width: 300px;
+            min-width: 320px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
+            background-color: var(--flames-black);
+            border: 2px solid var(--flames-red);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(200, 16, 46, 0.6), 0 0 25px rgba(244, 196, 48, 0.4);
         }
 
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
             justify-items: center;
         }
 
         .image-grid img {
             width: 100%;
-            max-width: 150px;
+            max-width: 200px;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 224, 130, 0.4);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--flames-gold), 0 0 20px var(--flames-red);
             transition: transform 0.3s ease;
             cursor: pointer;
+            border: 2px solid var(--flames-gold);
         }
 
         .image-grid img:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 0 20px var(--flames-gold), 0 0 30px var(--flames-red);
         }
 
         .text-content {
             background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            line-height: 1.6;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(200, 16, 46, 0.5);
+            line-height: 1.8;
+            border: 1px solid var(--flames-red);
         }
 
         .text-content p {
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
         }
 
         .section-title {
-            font-size: 2.5em;
+            font-size: 2.8em;
         }
 
         .design-process-list {
-            list-style-type: decimal;
+            list-style-type: none; /* Remove default bullet points */
             text-align: left;
             margin: 0 auto;
             padding: 0;
-            max-width: 700px;
-            color: var(--text-color);
+            max-width: 800px;
+            color: var(--flames-white);
         }
 
         .design-process-list li {
-            background-color: #1a1a1a;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            margin-bottom: 10px;
-            line-height: 1.6;
+            background-color: var(--flames-black);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(244, 196, 48, 0.3);
+            margin-bottom: 15px;
+            line-height: 1.7;
+            border-left: 5px solid var(--flames-red);
+            position: relative;
+            padding-left: 45px; /* Space for custom number */
         }
 
+        .design-process-list li strong {
+            color: var(--flames-gold);
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .design-process-list li::before {
+            content: attr(data-list-number);
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--flames-red);
+            color: var(--flames-white);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            border: 2px solid var(--flames-gold);
+        }
+
+        /* Lightbox specific styling */
         .lightbox-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.95); /* Darker background for lightbox */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
         .lightbox-overlay.active {
@@ -154,8 +210,8 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%;
+            max-height: 95%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -164,34 +220,78 @@
         .lightbox-content img {
             max-width: 100%;
             max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(255, 224, 130, 0.8);
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 0 25px var(--flames-gold), 0 0 40px var(--flames-red);
+            border: 3px solid var(--flames-red);
         }
 
         .lightbox-close {
             position: absolute;
             top: 20px;
             right: 20px;
-            color: #fff;
-            font-size: 40px;
+            color: var(--flames-white);
+            font-size: 50px;
             cursor: pointer;
             z-index: 2001;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
         .lightbox-close:hover {
-            color: var(--accent-color);
+            color: var(--flames-gold);
+            transform: scale(1.1);
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .navbar a {
+                padding: 18px 10px;
+                font-size: 0.9em;
+            }
+            h1, h2 {
+                font-size: 2.2em;
+                margin-bottom: 30px;
+            }
             .container {
                 flex-direction: column;
                 align-items: center;
             }
             .column {
-                width: 100%;
+                width: 90%;
+                min-width: unset;
+            }
+            .image-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            .image-grid img {
+                max-width: 120px;
+            }
+            .design-process-list li {
+                padding: 15px;
+                padding-left: 40px;
+            }
+            .design-process-list li::before {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8em;
+            }
+            .lightbox-close {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 0.8em;
+                padding: 18px 5px;
+            }
+            h1, h2 {
+                font-size: 1.8em;
+            }
+            .image-grid {
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            }
+            .image-grid img {
+                max-width: 90px;
             }
         }
     </style>
@@ -237,12 +337,12 @@
             <img src="screenshot final result.png" alt="Fusion 360 Final Result" class="lightbox-trigger">
         </div>
         <ol class="design-process-list">
-            <li><strong>01 Text, Font, Icon</strong> - First we choose what our text will be, then our font and an icon of our liking.</li>
-            <li><strong>02 Base Sketch</strong> - First, we made a reference rectangle that was 300 mm by 120 mm.</li>
-            <li><strong>03 Offsets</strong> - Outer offsets of about 10 mm and inner offsets of 1.2 mm were added around each character to create the walls.</li>
-            <li><strong>04 Extrude</strong> - The base plate was extruded to 1 mm, and the outer and inner walls were extruded 30 mm and 20 mm.</li>
-            <li><strong>05 LED Passage</strong> - Then I created some holes on each letter for the LEDs to pass, but I forgot to make a hole for the LED to come out.</li>
-            <li><strong>06 Design Caps</strong> - The caps were made with a 1 mm offset and another 0.1 mm inner one, then we extruded 20 mm downward.</li>
+            <li data-list-number="01"><strong>Text, Font, Icon</strong> - First we choose what our text will be, then our font and an icon of our liking.</li>
+            <li data-list-number="02"><strong>Base Sketch</strong> - First, we made a reference rectangle that was 300 mm by 120 mm.</li>
+            <li data-list-number="03"><strong>Offsets</strong> - Outer offsets of about 10 mm and inner offsets of 1.2 mm were added around each character to create the walls.</li>
+            <li data-list-number="04"><strong>Extrude</strong> - The base plate was extruded to 1 mm, and the outer and inner walls were extruded 30 mm and 20 mm.</li>
+            <li data-list-number="05"><strong>LED Passage</strong> - Then I created some holes on each letter for the LEDs to pass, but I forgot to make a hole for the LED to come out.</li>
+            <li data-list-number="06"><strong>Design Caps</strong> - The caps were made with a 1 mm offset and another 0.1 mm inner one, then we extruded 20 mm downward.</li>
         </ol>
     </section>
 
